@@ -1,0 +1,6 @@
+# Ne versionner que la police réellement référencée par index.html.
+# Les autres fichiers Inter (statiques, InterDisplay, italiques, inter.css)
+# restent en local pour un éventuel changement de graisse/police, sans
+# alourdir le dépôt déployé.
+assets/fonts/*
+!assets/fonts/InterVariable.woff2

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquêtes Éducatives — Accueil</title>
+<meta name="description" content="Enquêtes Éducatives — plateforme d'enquêtes, hébergée 100 % en France, conforme RGPD.">
+<!--
+  ============================================================
+  Page d'accueil enqueteseducatives.com (domaine racine / vitrine)
+  Point d'entrée vers les sous-domaines par public.
+  ------------------------------------------------------------
+  RGPD / CSP : aucun appel externe (pas de Google Fonts CDN).
+  Polices : Inter auto-hébergée (variable woff2) dans
+  assets/fonts/ — servie avec font-src 'self'. Fallback pile
+  système conservé si le fichier est absent.
+  Couleur de marque : --brand: #534AB7 (charte E²).
+  Publics actifs : Scolaire (scolaire.enqueteseducatives.com).
+  Entreprise = à venir (autre serveur). Associations /
+  Particuliers : reportés (post-décembre 2026), à réintroduire
+  comme cartes .soon le moment venu.
+  ============================================================
+-->
+<style>
+  @font-face{
+    font-family:"Inter";
+    font-style:normal;
+    font-weight:100 900;
+    font-display:swap;
+    src:url("assets/fonts/InterVariable.woff2") format("woff2");
+  }
+  :root{
+    --brand:#534AB7;
+    --brand-dark:#3f379a;
+    --ink:#1c1b2e;
+    --muted:#5f5d73;
+    --line:#e7e6ef;
+    --bg:#f7f7fb;
+    --card:#ffffff;
+    --soon:#8a88a0;
+    --radius:18px;
+    --shadow:0 1px 2px rgba(28,27,46,.04),0 12px 32px rgba(28,27,46,.07);
+    font-family:"Inter","DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1200px 520px at 50% -10%, rgba(83,74,183,.10), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  header.site{
+    padding:34px 24px 8px;
+    text-align:center;
+  }
+  .brandmark{
+    display:inline-flex;align-items:center;gap:11px;
+    font-weight:700;font-size:1.06rem;letter-spacing:.2px;
+  }
+  .brandmark .logo{
+    width:38px;height:38px;display:block;flex:none;
+    filter:drop-shadow(0 4px 12px rgba(83,74,183,.38));
+  }
+  main{
+    flex:1;
+    width:100%;
+    max-width:1000px;
+    margin:0 auto;
+    padding:26px 24px 40px;
+  }
+  .hero{
+    text-align:center;
+    margin:18px auto 40px;
+  }
+  .hero h1{
+    font-size:clamp(1.6rem,3.6vw,2.5rem);
+    line-height:1.12;
+    margin:0 0 14px;
+    letter-spacing:-.5px;
+    font-weight:750;
+    white-space:nowrap;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(120deg,var(--brand),#8a7ff0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{
+    font-size:1.02rem;color:var(--muted);margin:0 auto;
+    white-space:nowrap;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+    max-width:720px;
+    margin:0 auto;
+  }
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 22px 24px;
+    display:flex;flex-direction:column;
+    min-height:210px;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card .ico{
+    width:46px;height:46px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;font-size:1.4rem;
+    background:rgba(83,74,183,.10);color:var(--brand);
+  }
+  .card h2{font-size:1.18rem;margin:0 0 6px;font-weight:700}
+  .card p{margin:0 0 20px;color:var(--muted);font-size:.95rem;flex:1}
+  .card .cta{
+    display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    font-weight:650;font-size:.95rem;
+  }
+  /* Carte active */
+  .card.active{cursor:pointer}
+  .card.active:hover{
+    transform:translateY(-4px);
+    box-shadow:0 2px 4px rgba(28,27,46,.05),0 20px 44px rgba(83,74,183,.16);
+    border-color:rgba(83,74,183,.35);
+  }
+  .card.active .cta{color:var(--brand)}
+  .card.active .cta .arrow{transition:transform .18s ease}
+  .card.active:hover .cta .arrow{transform:translateX(4px)}
+  .card.active a.stretch{position:absolute;inset:0;border-radius:var(--radius)}
+  /* Carte à venir */
+  .card.soon{opacity:.92}
+  .card.soon .ico{background:rgba(138,136,160,.14);color:var(--soon)}
+  .card.soon .cta{color:var(--soon)}
+  .badge{
+    position:absolute;top:16px;right:16px;
+    font-size:.68rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;
+  }
+  .badge.on{background:rgba(46,160,110,.12);color:#1f8a5b}
+  .badge.later{background:rgba(138,136,160,.14);color:var(--soon)}
+  footer.site{
+    border-top:1px solid var(--line);
+    padding:22px 24px 30px;
+    text-align:center;
+    color:var(--muted);
+    font-size:.86rem;
+  }
+  footer.site .row{display:flex;gap:8px 16px;justify-content:center;align-items:center;flex-wrap:nowrap;white-space:nowrap;margin-bottom:0}
+  footer.site a{color:var(--brand);text-decoration:none}
+  footer.site a:hover{text-decoration:underline}
+  .fr{display:inline-flex;align-items:center;gap:7px}
+  .fr .flag{width:18px;height:12px;border-radius:2px;overflow:hidden;display:inline-flex;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
+  .fr .flag i{flex:1}
+  .fr .flag .b{background:#0055a4}.fr .flag .w{background:#fff}.fr .flag .r{background:#ef4135}
+  @media (max-width:720px){
+    .hero h1{white-space:normal;font-size:clamp(1.5rem,6vw,2rem)}
+    .hero p{white-space:normal;max-width:42ch;font-size:.98rem}
+    footer.site .row{flex-wrap:wrap;white-space:normal}
+  }
+  @media (max-width:560px){
+    main{padding:20px 14px 30px}
+    .grid{grid-template-columns:1fr;gap:12px;max-width:420px}
+    .card{min-height:0;padding:22px 18px}
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#ecebf5;--muted:#a6a4bd;--line:#2b2a3d;--bg:#141323;--card:#1d1c30;--soon:#7f7d95}
+    body{background:radial-gradient(1200px 520px at 50% -10%, rgba(122,111,224,.16), transparent 60%),var(--bg)}
+    .badge.on{background:rgba(46,160,110,.18)}
+  }
+</style>
+</head>
+<body>
+  <header class="site">
+    <span class="brandmark">
+      <svg class="logo" viewBox="0 0 100 100" role="img" aria-label="Logo Enquêtes Éducatives">
+        <circle cx="50" cy="50" r="49" fill="#534AB7"/>
+        <circle cx="50" cy="50" r="44.5" fill="none" stroke="#fff" stroke-width="1"/>
+        <circle cx="50" cy="50" r="42.3" fill="none" stroke="#fff" stroke-width="0.7"/>
+        <text x="45" y="71" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="60" fill="#fff">E</text>
+        <text x="76" y="43" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="28" fill="#fff">2</text>
+      </svg>
+      Enquêtes Éducatives
+    </span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Une plateforme, <span class="accent">plusieurs publics</span></h1>
+      <p>Des enquêtes conçues pour chaque environnement. Choisissez votre espace d'accès ci-dessous.</p>
+    </section>
+
+    <section class="grid" aria-label="Accès par public">
+
+      <!-- Scolaire — ACTIF -->
+      <article class="card active">
+        <span class="badge on">Disponible</span>
+        <span class="ico" aria-hidden="true">🎓</span>
+        <h2>Établissements scolaires</h2>
+        <p>Écoles, collèges et lycées : connexion, tableau de bord et passation des enquêtes.</p>
+        <span class="cta">Accéder à l'espace <span class="arrow">→</span></span>
+        <a class="stretch" href="https://scolaire.enqueteseducatives.com" aria-label="Accéder à l'espace Établissements scolaires"></a>
+      </article>
+
+      <!-- Entreprise — À VENIR -->
+      <article class="card soon">
+        <span class="badge later">À venir</span>
+        <span class="ico" aria-hidden="true">🏢</span>
+        <h2>Entreprises</h2>
+        <p>Espace dédié aux organisations. Ouverture prochaine.</p>
+        <span class="cta">Bientôt disponible</span>
+      </article>
+
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="row">
+      <span class="fr"><span class="flag"><i class="b"></i><i class="w"></i><i class="r"></i></span> Hébergé 100 % en France</span>
+      <span>·</span>
+      <span>Conforme RGPD</span>
+      <span>·</span>
+      <a href="mailto:contact@enqueteseducatives.com">contact@enqueteseducatives.com</a>
+      <span>·</span>
+      <span>© 2026 Enquêtes Éducatives</span>
+    </div>
+  </footer>
+</body>
+</html>
